@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BMI in Vue</title>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			<div class="row" style="background-color: grey; padding: 10px;">
+				<div class="col-md-4">
+
+					<h1>{{message}}</h1>
+
+					<form class="form-group row">
+						<label for="weight">Weight (lb) </label>
+						<input type="number" name="weight" v-model="weight"><br><br>
+						<label for="height">Height (feet) </label>
+						<input type="number" name="feet" v-model="feet" /><br><br>
+						<label for="height">Height (inches) </label>
+						<input type="number" name="inch" v-model="inch">
+					</form>
+
+					<br>
+					<button v-on:click="calculateBmi">Compute BMI</button>
+
+					<h4 class="bmi">Your BMI is {{result}}.</h4>
+
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+						<h3>BMI Categories</h3>
+						<div class="grid" style="display: flex;">
+						<div style="background-color: yellow; width: 200px; text-align: center; ">Underweight = <18.5</div>
+						<div style="background-color: green;width: 200px; text-align: center;">Normal Weight = between 18.5-24.9</div>
+						<div style="background-color: #ff9900;width: 200px; text-align: center;">Over Weight = between 25-29.9</div>
+						<div style="background-color: red;width: 200px; text-align: center;">Obesity = BMI of 30 or greater</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el: '#app',
+			data: {
+				message: 'BMI Calculator',
+				weight:'',
+				feet:'',
+				inch:'',
+				result: ''
+			},
+			methods: {
+				calculateBmi(){
+					var feet=parseInt(this.feet);
+					var inch=parseInt(this.inch);
+					var weight=parseInt(this.weight);
+					var height = (feet*12)+inch;
+					var bmi=((weight/(height*height))*703).toFixed(2);
+					this.result = bmi;
+					if (bmi<18.5) {
+						$('.bmi').css('color','yellow')
+					}else if (bmi<25) {
+						$('.bmi').css('color','green')
+					}else if (bmi<30) {
+						$('.bmi').css('color','#ff9900')
+					}else {
+						$('.bmi').css('color','red')
+					}	
+				}
+			}
+
+		})
+	</script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>	
+
+</body>
+</html>
